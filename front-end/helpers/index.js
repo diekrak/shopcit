@@ -22,7 +22,7 @@
   };
   helpers.mylogger = function(req, res, next) {
 
-   console.log('body '+JSON.stringify(req.body));
+   console.log('body: '+JSON.stringify(req.body));
     next();
   };
 
@@ -83,6 +83,21 @@
       helpers.respondSuccessBody(res, body);
     }.bind({res: res}));
   }
+
+
+
+  const imageFilter = function(req, file, cb) {
+    // Accept images only
+    if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
+      req.fileValidationError = 'Only image files are allowed!';
+      return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+  };
+  exports.imageFilter = imageFilter;
+
+
+
 
   /* TODO: Add documentation */
   helpers.getCustomerId = function(req, env) {

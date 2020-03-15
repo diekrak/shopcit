@@ -1,0 +1,8 @@
+Change DB user in
+catalogue/app.js
+Default User is "shop" create it or change
+
+
+#Issues
+Option "Show Cart" doesnt show items when is not logged.
+Start server.js first go browser adn then start other rest services
