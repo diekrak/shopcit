@@ -2,6 +2,6 @@
     "name": "node-api",
     "main": "server.js",
     "dependencies": {
-       
+        "mysql": "2.18.1"
     }
 }
