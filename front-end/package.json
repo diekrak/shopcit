@@ -2,19 +2,20 @@
   "name": "frontend",
   "version": "0.0.1",
   "description": "Front end shop.",
-
   "dependencies": {
     "async": "^1.5.2",
-    "body-parser": "^1.15.1",
+    "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.3",
-    "express": "^4.13.4",
-    "express-session": "^1.13.0",
+    "epimetheus": "^1.0.92",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
     "finalhandler": "^0.4.1",
-    "request": "^2.72.0",
-    "serve-static": "^1.10.2",
-    "epimetheus": "^1.0.46",
+    "morgan": "^1.9.1",
     "prom-client": "^6.1.0",
-    "morgan": "^1.7.0"
+    "request": "^2.72.0",
+    "serve-static": "^1.14.1",
+    "multer": "^1.4.2",
+    "multer-gridfs-storage": "^3.2.3"
   },
   "devDependencies": {
     "chai": "^3.5.0",

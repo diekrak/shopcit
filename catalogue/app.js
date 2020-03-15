@@ -12,7 +12,7 @@ var headers = [
 
 var db = mysql.createConnection({
     host:     'localhost',
-    user:     'root',
+    user:     'shop',
     password: 'asdf1234',
     database: 'shop'
 });
@@ -25,12 +25,53 @@ var server = http.createServer(function (request, response) {
     if (request.method == 'POST') {
         switch (path) {
 
-
-            /* TODO */
             case "/newProduct":
+                var body = '';
+                console.log("newProduct ");
 
+                request.on('data', function (data) {
+                    body += data;
+                });
 
-                break;
+                request.on('end', function () {
+                    var product = JSON.parse(body);
+                    console.log(product);
+
+                    response.writeHead(200, {
+                        'Access-Control-Allow-Origin': '*'
+                    });
+
+                    var query = "SELECT * FROM products where name = '"+product.name+"'";
+
+                    db.query(
+                        query,
+                        [],
+                        function(err, rows) {
+                            if (err) throw err;
+                            if (rows!=null && rows.length>0) {
+                                console.log(" Product exits");
+                                response.end('{"success": "0"}');
+                            }else{
+                                query = "INSERT INTO products (name, quantity, price, image)"+
+                                    "VALUES(?, ?, ?, ?)";
+                                db.query(
+                                    query,
+                                    [product.name, product.quantity, product.price, product.image],
+                                    function(err, result) {
+                                        if (err) {
+                                            response.end('{"success": "3"}');
+                                            throw err;
+                                        }
+                                        response.end('{"success": "1"}');
+
+                                    }
+                                );
+                            }
+
+                        }
+                    );
+
+                });
         } //switch
     }
     else {
@@ -51,7 +92,7 @@ var server = http.createServer(function (request, response) {
                     [],
                     function(err, rows) {
                         if (err) throw err;
-                        console.log(JSON.stringify(rows, null, 2));
+                   //     console.log(JSON.stringify(rows, null, 2));
                         response.end(JSON.stringify(rows));
                         console.log("Products sent");
                     }
@@ -89,12 +130,7 @@ var server = http.createServer(function (request, response) {
 
                 });
 
-
-
                 break;
-
-
-
 
         }
     }
