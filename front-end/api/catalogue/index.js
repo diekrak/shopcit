@@ -68,8 +68,18 @@
     });
 
     app.get("/getProducts", function (req, res, next) {
-        var x = endpoints.catalogueUrl + "/getProducts";//+ req.url.toString();
+        var x = endpoints.catalogueUrl + "/getProducts";
         console.log("getProducts " + x);
+        console.log("Getting catalogueUrl  " + endpoints.catalogueUrl);
+        console.log("Getting env  " +  process.env.catalog);
+        console.log("Getting newProductUrl  " + endpoints.newProductUrl);
+        console.log("Getting cartsUrl  " + endpoints.cartsUrl);
+        console.log("Getting env  " +  process.env.cart);
+        console.log("Getting ordersUrl  " + endpoints.ordersUrl);
+        console.log("Getting env  " +  process.env.orders);
+        console.log("Getting loginUrl  " + endpoints.loginUrl);
+        console.log("Getting env  " +  process.env.users);
+
         helpers.simpleHttpRequest(x
             , res, next);
     });

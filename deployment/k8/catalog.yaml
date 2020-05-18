@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog
+spec:
+  type: NodePort
+  selector:
+    app: catalog
+  ports:
+    - port: 3002
+      targetPort: 3002
+      nodePort: 30002
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: catalog
+spec:
+  selector:
+    matchLabels:
+      app: catalog
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: catalog
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "3002"
+        prometheus.io/path: /metrics
+    spec:
+      containers:
+        - name: catalog
+          image: diebar/catalog:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3002

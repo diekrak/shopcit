@@ -1,10 +1,12 @@
+
 var express = require("express")
     , morgan = require("morgan")
     , path = require("path")
+    , epimetheus = require("epimetheus")
     , bodyParser = require("body-parser")
-
     , app = express();
 
+epimetheus.instrument(app);
 
 app.use(morgan('combined'));
 app.use(morgan("dev", {}));
@@ -12,6 +14,7 @@ app.use(bodyParser.json());
 
 //app.use(morgan("dev", {}));
 var cart = [];
+
 
 app.post("/add", function (req, res, next) {
     var obj = req.body;
@@ -65,7 +68,6 @@ app.del("/cart/:custId/items/:id", function (req, res, next) {
     customerCart = customerCart.filter(item => item.cartid != req.param.id);
     for (const item of customerCart) {
         if (item.cartid == req.params.id) {
-            console.log("founbd kill")
             customerCart.splice(customerCart.indexOf(item), 1);
             cart["" + req.params.custId] = customerCart;
             break;
@@ -80,22 +82,28 @@ app.del("/cart/:custId/items/:id", function (req, res, next) {
 
 
 app.get("/cart/:custId/items", function (req, res, next) {
-
-
     var custId = req.params.custId;
     console.log("getCart " + custId);
-
     console.log('cart ' + cart);
-
     console.log(JSON.stringify(cart["" + custId], null, 2));
-
     res.send(JSON.stringify(cart["" + custId]));
-    console.log("cart sent"+JSON.stringify(cart["" + custId]));
+    console.log("cart sent" + JSON.stringify(cart["" + custId]));
+});
 
+app.get("/cart/:custId/order/done", function (req, res, next) {
+    var custId = req.params.custId;
+    console.log("getCart " + custId);
+    console.log('cart ' + cart);
+    console.log(JSON.stringify(cart["" + custId], null, 2));
+    console.log("cart sent" + JSON.stringify(cart["" + custId]));
+    let body = JSON.stringify(cart["" + custId]);
+    res.send(body);
+    cart["" + custId] = [];
 });
 
 
-var server = app.listen(process.env.PORT || 3003, function () {
+
+var server = app.listen(process.env.PORT || 3004, function () {
     var port = server.address().port;
-    console.log("App now running in %s mode on port %d", app.get("env"), port);
+    console.log("App now running in %s mode on port %d", app.get("env"),  port);
 });

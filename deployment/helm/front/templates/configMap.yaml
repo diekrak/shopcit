@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+data:
+  PORT: {{ .Values.config.env.port |quote  }}
+  catalog: {{ .Values.config.env.catalog |quote  }}
+  cart: {{ .Values.config.env.cart |quote  }}
+  users: {{ .Values.config.env.users |quote  }}
+  orders: {{ .Values.config.env.orders |quote  }}

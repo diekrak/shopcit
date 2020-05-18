@@ -1,8 +1,45 @@
-Change DB user in
-catalogue/app.js
-Default User is "shop" create it or change
+Functionalities added:
+-	Allow register as user administrator.
+-	Allow just to administrator users to see the “new Product” option when login.
+-	Allow users to logout of system, so once a user login or register they can see the logout button.
+-	Implement a new service called orders to handle the user purchases.
+-	Implement checkout option (in “Show Cart”) , which once is clicked it will save the order done in DB with the items bought and the date so as clear the cart.
+-	Add a new menu option called “My Orders” which allows the user to see a summary of his purchases orders.
+
+Folders:
+deployment/docker:
+Added deployment options it holds some tests and demo files to create a basic Docker option so as a compose environment using docker and a MySQL db with a
+nodeJS application.
+
+deployment/k8:
+It contains also some kubernetes files used to test and understand how works the deployment.
+
+deployment/helm:
+Contains all files wiht templates used to deployed the application, some basic steps to do it are:
+
+1. create Docker images to be deployed:
+
+Each service contains a docker folder with a Dockerfile configured.
+Go to the desired application and build a new image e.g.:
+# cd catalog/
+# docker build -t diebar/catalog:1.0.0 . -f docker/Dockerfile
+
+2. create the application using Helm.
+e.g.
+# Helm install catalog /catalog
+Configure and set the templates accordingly.
 
 
-#Issues
-Option "Show Cart" doesnt show items when is not logged.
-Start server.js first go browser adn then start other rest services
+3. Add Prometheus and Grafana
+
+# helm install prometheus stable/prometheus
+# helm install grafana stable/grafana
+
+Configure them and add boards and graph as desired.
+
+
+
+
+
+
+
