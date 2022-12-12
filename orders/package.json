@@ -3,7 +3,7 @@
   "main": "server.js",
   "dependencies": {
     "mysql": "^2.13.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "epimetheus": "^1.0.92"
   }
 }
