@@ -4,7 +4,7 @@
   "description": "cart microservice.",
   "dependencies": {
     "body-parser": "^1.15.1",
-    "express": "^4.13.4",
+    "express": "^4.17.3",
     "morgan": "^1.8.1",
     "epimetheus": "^1.0.92"
   }
